@@ -223,6 +223,10 @@ Public Class MonthView
     Private Sub btnMonth_Click(sender As Object, e As EventArgs) Handles btnMonth.Click
         If ((cboxMonth.Text <> String.Empty) And (cboxYear.Text <> String.Empty)) Then
             labelCalForMonth(0, Integer.Parse(cboxYear.Text), cboxMonth.Text, 0)
+        ElseIf (cboxMonth.Text = String.Empty) Then
+            MessageBox.Show("Please select a month", "Display Month View", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
+        ElseIf (cboxYear.Text = String.Empty) Then
+            MessageBox.Show("Please select a year", "Display Month View", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
         End If
 
     End Sub
