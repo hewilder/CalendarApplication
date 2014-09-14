@@ -8,3 +8,4 @@ C:\Users\Hannah\Documents\Visual Studio 2012\Projects\CalendarApplication\Calend
 C:\Users\Hannah\Documents\Visual Studio 2012\Projects\CalendarApplication\CalendarApplication\obj\Debug\CalendarApplication.exe
 C:\Users\Hannah\Documents\Visual Studio 2012\Projects\CalendarApplication\CalendarApplication\obj\Debug\CalendarApplication.xml
 C:\Users\Hannah\Documents\Visual Studio 2012\Projects\CalendarApplication\CalendarApplication\obj\Debug\CalendarApplication.pdb
+C:\Users\Hannah\Documents\Visual Studio 2012\Projects\CalendarApplication\CalendarApplication\obj\Debug\CalendarApplication.Form2.resources
