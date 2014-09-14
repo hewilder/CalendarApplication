@@ -36,7 +36,7 @@ Public Class DayView
             Dim sqlComm As New MySqlCommand
 
             'Construct the query and open the connection
-            sqlComm.CommandText = "SELECT * FROM events WHERE startDate = " + ";"
+            sqlComm.CommandText = "SELECT * FROM events WHERE startDate = " + " ORDER BY startTime;"
 
             sqlComm.Connection = connection
             da.SelectCommand = sqlComm
@@ -48,6 +48,34 @@ Public Class DayView
             'Get the information from the returned data
             Return dt.Tables(0).Rows
 
+
+            'Catch any errors that occur and close the connection
+        Catch ex As Exception
+            If (connection.State = Data.ConnectionState.Open) Then
+                connection.Close()
+            End If
+
+
+        End Try
+    End Function
+
+    Public Function deleteEvent(eventId As String) As Integer
+        Dim connectionString As String = "Server=127.0.0.1; Database=calendar; Uid=root;Pwd=teamsoftware"
+        Dim connection As New MySqlConnection(connectionString)
+        Dim da As New MySqlDataAdapter
+        Dim dt As DataSet = New DataSet
+
+        Try
+            connection.Open()
+            Dim sqlComm As New MySqlCommand
+
+            'Construct the query and open the connection
+            sqlComm.CommandText = "DELETE FROM events WHERE id = " + eventId + ";"
+
+            sqlComm.Connection = connection
+            sqlComm.ExecuteNonQuery()
+
+            connection.Close()
 
             'Catch any errors that occur and close the connection
         Catch ex As Exception
