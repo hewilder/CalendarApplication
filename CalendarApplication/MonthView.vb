@@ -6,10 +6,37 @@ Public Class MonthView
 
     Private Sub makeCalendar()
         Dim pictureboxes(41) As PictureBox
+        Dim weekDayLabels(7) As Label
         Dim labels(41) As Label
 
-        Dim topOffset As Integer = 125
+        Dim topOffset As Integer = 165
         Dim leftOffset As Integer = 25
+
+        For counter As Integer = 0 To 6
+            weekDayLabels(counter) = New Label
+            weekDayLabels(counter).BackColor = Color.White
+            weekDayLabels(counter).BorderStyle = BorderStyle.None
+            weekDayLabels(counter).MinimumSize = New Size(121, 20)
+            weekDayLabels(counter).TextAlign = ContentAlignment.BottomCenter
+            weekDayLabels(counter).Font = New Font("Microsoft Sans Serif", 12, FontStyle.Bold)
+            weekDayLabels(counter).Location = New Point(leftOffset + 131 * (counter Mod 7), topOffset - 30 + 75 * (counter \ 7))
+            If (counter = 0) Then
+                weekDayLabels(counter).Text = "Sunday"
+            ElseIf (counter = 1) Then
+                weekDayLabels(counter).Text = "Monday"
+            ElseIf (counter = 2) Then
+                weekDayLabels(counter).Text = "Tuesday"
+            ElseIf (counter = 3) Then
+                weekDayLabels(counter).Text = "Wednesday"
+            ElseIf (counter = 4) Then
+                weekDayLabels(counter).Text = "Thursday"
+            ElseIf (counter = 5) Then
+                weekDayLabels(counter).Text = "Friday"
+            ElseIf (counter = 6) Then
+                weekDayLabels(counter).Text = "Saturday"
+            End If
+            Me.Controls.Add(weekDayLabels(counter))
+        Next
 
         For counter As Integer = 0 To 41
             labels(counter) = New Label
@@ -53,8 +80,12 @@ Public Class MonthView
     Private Sub labelClick(ByVal sender As System.Object, ByVal e As System.EventArgs)
         Dim label As Label = DirectCast(sender, Label)
         If (label.Text <> String.Empty) Then
-            TextBox1.Text = label.Tag
+            Dim formatDate As DateTime
+            formatDate = DateTime.Parse(getLabelNum(label.Tag) + lblMonthName.Text)
+            Dim dayViewForm As New DayView(formatDate)
+            Call dayViewForm.Show()
         End If
+       
 
     End Sub
 
@@ -62,7 +93,10 @@ Public Class MonthView
         Dim pbox As PictureBox = DirectCast(sender, PictureBox)
         Dim label As Label = ctlList.Item("label" + getPBoxNum(pbox.Name))
         If (label.Text <> String.Empty) Then
-            TextBox1.Text = pbox.Tag
+            Dim formatDate As DateTime
+            formatDate = DateTime.Parse(getLabelNum(label.Tag) + lblMonthName.Text)
+            Dim dayViewForm As New DayView(formatDate)
+            Call dayViewForm.Show()
         End If
     End Sub
 
@@ -185,8 +219,8 @@ Public Class MonthView
             Dim counter As Integer = 0
             For Each row In dt.Tables(0).Rows
                 If (counter = 0) Then
-                    labelCalendar(row.ItemArray(2), row.ItemArray(1))
-                    lblMonthName.Text = row("Name").ToString()
+                    labelCalendar(row("startOffset"), row("numDays"))
+                    lblMonthName.Text = row("name").ToString() + " " + row("year").ToString()
                 End If
 
                 'Make sure we only process the top row if more than one is returned 
@@ -216,7 +250,7 @@ Public Class MonthView
     End Sub
 
     Private Sub btnDay_Click(sender As Object, e As EventArgs) Handles btnDay.Click
-        Dim dayViewForm As New Form2(dtpDay.Value)
+        Dim dayViewForm As New DayView(dtpDay.Value)
         Call dayViewForm.Show()
     End Sub
 

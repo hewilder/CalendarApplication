@@ -1,4 +1,4 @@
-﻿Public Class Form2
+﻿Public Class DayView
     Dim myDate As Date
 
     Public Sub New(ByVal dateValue As Date)
@@ -10,6 +10,6 @@
 
 
     Private Sub Form2_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        
+
     End Sub
 End Class

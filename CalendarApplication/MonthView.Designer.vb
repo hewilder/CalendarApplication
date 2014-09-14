@@ -76,9 +76,12 @@ Partial Class MonthView
         'dtpDay
         '
         Me.dtpDay.Location = New System.Drawing.Point(669, 69)
+        Me.dtpDay.MaxDate = New Date(2015, 12, 31, 0, 0, 0, 0)
+        Me.dtpDay.MinDate = New Date(2014, 1, 1, 0, 0, 0, 0)
         Me.dtpDay.Name = "dtpDay"
         Me.dtpDay.Size = New System.Drawing.Size(181, 20)
         Me.dtpDay.TabIndex = 7
+        Me.dtpDay.Value = New Date(2014, 1, 1, 0, 0, 0, 0)
         '
         'Label2
         '

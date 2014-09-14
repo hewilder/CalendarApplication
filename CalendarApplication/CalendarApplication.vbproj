@@ -71,17 +71,23 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Form1.vb">
+    <Compile Include="AddEvent.Designer.vb">
+      <DependentUpon>AddEvent.vb</DependentUpon>
+    </Compile>
+    <Compile Include="AddEvent.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form1.Designer.vb">
-      <DependentUpon>Form1.vb</DependentUpon>
+    <Compile Include="MonthView.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form2.Designer.vb">
-      <DependentUpon>Form2.vb</DependentUpon>
+    <Compile Include="MonthView.Designer.vb">
+      <DependentUpon>MonthView.vb</DependentUpon>
+      <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form2.vb">
+    <Compile Include="DayView.Designer.vb">
+      <DependentUpon>DayView.vb</DependentUpon>
+    </Compile>
+    <Compile Include="DayView.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="My Project\AssemblyInfo.vb" />
@@ -101,11 +107,14 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Form1.resx">
-      <DependentUpon>Form1.vb</DependentUpon>
+    <EmbeddedResource Include="AddEvent.resx">
+      <DependentUpon>AddEvent.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Form2.resx">
-      <DependentUpon>Form2.vb</DependentUpon>
+    <EmbeddedResource Include="MonthView.resx">
+      <DependentUpon>MonthView.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DayView.resx">
+      <DependentUpon>DayView.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">
       <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
