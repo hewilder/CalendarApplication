@@ -77,6 +77,12 @@
     <Compile Include="AddEvent.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="UpdateEvent.Designer.vb">
+      <DependentUpon>UpdateEvent.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UpdateEvent.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="MonthView.vb">
       <SubType>Form</SubType>
     </Compile>
@@ -109,6 +115,9 @@
   <ItemGroup>
     <EmbeddedResource Include="AddEvent.resx">
       <DependentUpon>AddEvent.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UpdateEvent.resx">
+      <DependentUpon>UpdateEvent.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MonthView.resx">
       <DependentUpon>MonthView.vb</DependentUpon>
