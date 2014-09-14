@@ -31,7 +31,7 @@ Partial Class MonthView
         Me.cboxYear = New System.Windows.Forms.ComboBox()
         Me.Label3 = New System.Windows.Forms.Label()
         Me.btnDay = New System.Windows.Forms.Button()
-        Me.Button1 = New System.Windows.Forms.Button()
+        Me.btnAddEvent = New System.Windows.Forms.Button()
         Me.SuspendLayout()
         '
         'cboxMonth
@@ -123,15 +123,15 @@ Partial Class MonthView
         Me.btnDay.Text = "Display"
         Me.btnDay.UseVisualStyleBackColor = True
         '
-        'Button1
+        'btnAddEvent
         '
-        Me.Button1.BackgroundImage = Global.CalendarApplication.My.Resources.Resources.green_background
-        Me.Button1.Location = New System.Drawing.Point(779, 97)
-        Me.Button1.Name = "Button1"
-        Me.Button1.Size = New System.Drawing.Size(152, 23)
-        Me.Button1.TabIndex = 12
-        Me.Button1.Text = "Add an Event"
-        Me.Button1.UseVisualStyleBackColor = True
+        Me.btnAddEvent.BackgroundImage = Global.CalendarApplication.My.Resources.Resources.green_background
+        Me.btnAddEvent.Location = New System.Drawing.Point(779, 97)
+        Me.btnAddEvent.Name = "btnAddEvent"
+        Me.btnAddEvent.Size = New System.Drawing.Size(152, 23)
+        Me.btnAddEvent.TabIndex = 12
+        Me.btnAddEvent.Text = "Add an Event"
+        Me.btnAddEvent.UseVisualStyleBackColor = True
         '
         'MonthView
         '
@@ -139,7 +139,7 @@ Partial Class MonthView
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.White
         Me.ClientSize = New System.Drawing.Size(984, 630)
-        Me.Controls.Add(Me.Button1)
+        Me.Controls.Add(Me.btnAddEvent)
         Me.Controls.Add(Me.btnDay)
         Me.Controls.Add(Me.Label3)
         Me.Controls.Add(Me.cboxYear)
@@ -164,6 +164,6 @@ Partial Class MonthView
     Friend WithEvents cboxYear As System.Windows.Forms.ComboBox
     Friend WithEvents Label3 As System.Windows.Forms.Label
     Friend WithEvents btnDay As System.Windows.Forms.Button
-    Friend WithEvents Button1 As System.Windows.Forms.Button
+    Friend WithEvents btnAddEvent As System.Windows.Forms.Button
 
 End Class

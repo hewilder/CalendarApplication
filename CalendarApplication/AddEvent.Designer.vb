@@ -28,7 +28,7 @@ Partial Class AddEvent
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(375, 207)
+        Me.ClientSize = New System.Drawing.Size(407, 208)
         Me.Name = "AddEvent"
         Me.Text = "AddEvent"
         Me.ResumeLayout(False)
