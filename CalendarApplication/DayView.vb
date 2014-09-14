@@ -1,5 +1,5 @@
 ﻿Public Class DayView
-    Dim myDate As Date
+    Public myDate As Date
 
     Public Sub New(ByVal dateValue As Date)
         InitializeComponent()

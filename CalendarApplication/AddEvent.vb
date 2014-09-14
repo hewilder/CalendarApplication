@@ -59,11 +59,61 @@ Public Class AddEvent
 
     End Function
 
+    'Make sure to use this after a successful insert, it will close all instances of the form 
+    'displaying the date on which this event was added and open a new one for the start date of the new event
+    Private Sub afterSuccessfulInsert(startDate As String)
+        For Each frm In My.Application.OpenForms
+            Try
+                Dim dayViewForm As DayView = DirectCast(frm, DayView)
+                If (dayViewForm.myDate = startDate) Then
+                    dayViewForm.Close()
+                End If
+            Catch ex As Exception
+
+            End Try
+
+        Next
+
+        Dim dateArr As String() = startDate.Split("/")
+        Dim newDayViewForm As DayView = New DayView(New Date(dateArr(2), dateArr(0), dateArr(1)))
+        'Open day view form
+        Call newDayViewForm.Show()
+
+        'Close add event form
+        Me.Close()
+    End Sub
+
+    'Action occurs on form load 
     Private Sub AddEvent_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
+        'Close if another instance of the add event form is already open
+        For Each frm In My.Application.OpenForms
+            Try
+                Dim addEventForm As AddEvent = DirectCast(frm, AddEvent)
+                If (addEventForm IsNot (Me)) Then
+                    MessageBox.Show("Only one instance of of the add event window can be open at once. Please close the other instance and try again.", "Multiple Instances Error", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                    addEventForm.Focus()
+                    Me.Close()
+                End If
+
+            Catch ex As Exception
+
+            End Try
+
+        Next
+    End Sub
+
+    'Action occurs on button click
+    Private Sub btnSave_Click(sender As Object, e As EventArgs) Handles btnSave.Click
         '-------------------------------------------------------
         'Example of inserting a new event (remove after testing)
         '-------------------------------------------------------
-        insertEvent(DateTime.Now, DateTime.Now, "newEvent", "new event description")
+        Dim result As Integer = insertEvent(DateTime.Now, DateTime.Now, "newEvent", "new event description")
+        If (result = 0) Then
+            Dim startDateArr() As String = DateTime.Now.Date.ToString().Split
+            Dim startDate As String = startDateArr(0)
+
+            afterSuccessfulInsert(startDate)
+        End If
     End Sub
 End Class
