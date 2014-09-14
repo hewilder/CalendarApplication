@@ -23,7 +23,7 @@ Public Class DayView
     '          (Put the month and year on the calendar) 
     '          lblMonthName.Text = row("name").ToString() + " " + row("year").ToString()
     '     Next
-
+    '***Return values from this function should be checked for null references as I could not make an empty DataRowCollection****
 
     Public Function getEvents() As DataRowCollection
         Dim connectionString As String = "Server=127.0.0.1; Database=calendar; Uid=root;Pwd=teamsoftware"
@@ -55,10 +55,10 @@ Public Class DayView
                 connection.Close()
             End If
 
-
         End Try
     End Function
 
+    '
     Public Function deleteEvent(eventId As String) As Integer
         Dim connectionString As String = "Server=127.0.0.1; Database=calendar; Uid=root;Pwd=teamsoftware"
         Dim connection As New MySqlConnection(connectionString)
@@ -83,8 +83,10 @@ Public Class DayView
                 connection.Close()
             End If
 
-
+            Return 1
         End Try
+
+        Return 0
     End Function
 
     Private Sub Form2_Load(sender As Object, e As EventArgs) Handles MyBase.Load

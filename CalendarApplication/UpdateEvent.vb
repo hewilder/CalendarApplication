@@ -16,6 +16,9 @@ Public Class UpdateEvent
                     updateForm.Focus()
                     Me.Close()
                 End If
+
+                'Pull existing form data out of database
+                getEventData()
             Catch ex As Exception
 
             End Try
@@ -24,6 +27,50 @@ Public Class UpdateEvent
 
 
     End Sub
+
+    'Requries the event ID (obtained by constructor)
+    '****Should be checked for null return, which is what it will return on error*****
+    Private Function getEventData() As DataRow
+        Dim connectionString As String = "Server=127.0.0.1; Database=calendar; Uid=root;Pwd=teamsoftware"
+        Dim connection As New MySqlConnection(connectionString)
+        Dim da As New MySqlDataAdapter
+        Dim dt As DataSet = New DataSet
+
+        Try
+            connection.Open()
+            Dim sqlComm As New MySqlCommand
+
+            'Construct the query and open the connection
+            sqlComm.CommandText = "SELECT * FROM events WHERE id = " + myId + " ORDER BY startTime;"
+
+            sqlComm.Connection = connection
+            da.SelectCommand = sqlComm
+
+            'Get the data
+            da.Fill(dt, "events")
+            connection.Close()
+
+            'Get return the first row found (there should only be one since ID is the primary key)
+            If (dt.Tables(0).Rows.Count > 0) Then
+                Return dt.Tables(0).Rows(0)
+            Else
+                Return Nothing
+            End If
+
+
+
+            'Catch any errors that occur and close the connection
+        Catch ex As Exception
+            If (connection.State = Data.ConnectionState.Open) Then
+                connection.Close()
+            End If
+
+            MessageBox.Show("Event information could not be retrieved, the following error occurred:" + Environment.NewLine + ex.Message, "Event Lookup Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+
+            Return Nothing
+
+        End Try
+    End Function
 
     'Takes a start date and time (together), takes a end date and time (together), a title, and a description
     Private Function insertEvent(startDateTime As Date, endDateTime As Date, title As String, details As String) As Integer
@@ -108,21 +155,7 @@ Public Class UpdateEvent
     'Action occurs on form load 
     Private Sub AddEvent_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
-        'Close if another instance of the add event form is already open
-        For Each frm In My.Application.OpenForms
-            Try
-                Dim addEventForm As AddEvent = DirectCast(frm, AddEvent)
-                If (addEventForm IsNot (Me)) Then
-                    MessageBox.Show("Only one instance of of the add event window can be open at once. Please close the other instance and try again.", "Multiple Instances Error", MessageBoxButtons.OK, MessageBoxIcon.Information)
-                    addEventForm.Focus()
-                    Me.Close()
-                End If
-
-            Catch ex As Exception
-
-            End Try
-
-        Next
+        
     End Sub
 
     'Action occurs on button click
