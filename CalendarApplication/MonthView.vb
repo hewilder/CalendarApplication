@@ -9,9 +9,11 @@ Public Class MonthView
         Dim weekDayLabels(7) As Label
         Dim labels(41) As Label
 
+        'How much to offset the calendar from top and left
         Dim topOffset As Integer = 165
         Dim leftOffset As Integer = 25
 
+        'Generate labels for the weekdays 
         For counter As Integer = 0 To 6
             weekDayLabels(counter) = New Label
             weekDayLabels(counter).BackColor = Color.White
@@ -20,6 +22,8 @@ Public Class MonthView
             weekDayLabels(counter).TextAlign = ContentAlignment.BottomCenter
             weekDayLabels(counter).Font = New Font("Microsoft Sans Serif", 12, FontStyle.Bold)
             weekDayLabels(counter).Location = New Point(leftOffset + 131 * (counter Mod 7), topOffset - 30 + 75 * (counter \ 7))
+
+            'Choose correct text
             If (counter = 0) Then
                 weekDayLabels(counter).Text = "Sunday"
             ElseIf (counter = 1) Then
@@ -35,6 +39,8 @@ Public Class MonthView
             ElseIf (counter = 6) Then
                 weekDayLabels(counter).Text = "Saturday"
             End If
+
+            'Add week day label to form
             Me.Controls.Add(weekDayLabels(counter))
         Next
 
@@ -50,14 +56,20 @@ Public Class MonthView
             labels(counter).Name = "label" + counter.ToString()
             labels(counter).Text = counter.ToString()
             Me.Controls.Add(labels(counter))
+
+            'Add actions to picture boxes
+            'Add click action
             AddHandler labels(counter).Click, AddressOf Me.labelClick
+            'Add hover action
             AddHandler labels(counter).MouseHover, AddressOf Me.calHover
             AddHandler labels(counter).MouseLeave, AddressOf Me.calLeave
+
+            'Add label to form
             ctlList.Add(labels(counter).Tag, labels(counter))
 
         Next
 
-        'new comment
+        'Add the picture boxes
         For counter As Integer = 0 To 41
             pictureboxes(counter) = New PictureBox
             pictureboxes(counter).BackColor = Color.WhiteSmoke
@@ -67,9 +79,15 @@ Public Class MonthView
             pictureboxes(counter).Name = "pbox" + counter.ToString()
             pictureboxes(counter).Tag = "pbox" + counter.ToString()
             Me.Controls.Add(pictureboxes(counter))
+
+            'Add actions to picture boxes
+            'Add click action
             AddHandler pictureboxes(counter).Click, AddressOf Me.pboxClick
+            'Add hover action
             AddHandler pictureboxes(counter).MouseHover, AddressOf Me.calHover
             AddHandler pictureboxes(counter).MouseLeave, AddressOf Me.calLeave
+
+            'Add picture box to form
             ctlList.Add(pictureboxes(counter).Tag, pictureboxes(counter))
 
         Next
@@ -77,8 +95,11 @@ Public Class MonthView
     End Sub
 
 
+    'Function that handles a click on a label
     Private Sub labelClick(ByVal sender As System.Object, ByVal e As System.EventArgs)
         Dim label As Label = DirectCast(sender, Label)
+
+        'Take action if th picture box was a valid day
         If (label.Text <> String.Empty) Then
             Dim formatDate As DateTime
             formatDate = DateTime.Parse(getLabelNum(label.Tag) + lblMonthName.Text)
@@ -89,9 +110,12 @@ Public Class MonthView
 
     End Sub
 
+    'Function handles a click on a picture box
     Private Sub pboxClick(ByVal sender As System.Object, ByVal e As System.EventArgs)
         Dim pbox As PictureBox = DirectCast(sender, PictureBox)
         Dim label As Label = ctlList.Item("label" + getPBoxNum(pbox.Name))
+
+        'Take action if the picture box represents a valid day
         If (label.Text <> String.Empty) Then
             Dim formatDate As DateTime
             formatDate = DateTime.Parse(getLabelNum(label.Tag) + lblMonthName.Text)
@@ -100,12 +124,14 @@ Public Class MonthView
         End If
     End Sub
 
+    'Function that handles the mouse entering a calendar box
     Private Sub calHover(ByVal sender As System.Object, ByVal e As System.EventArgs)
         Dim control As Control = DirectCast(sender, Control)
         Dim tag As String = control.Tag
         Dim otherControl As Control
         Dim selColor As Color = Color.LightSteelBlue
 
+        'Take action if the label represents a valid day
         If (tag.Contains("label")) Then
             otherControl = ctlList.Item("pbox" + getLabelNum(tag))
             If (control.Text <> String.Empty) Then
@@ -122,6 +148,7 @@ Public Class MonthView
 
     End Sub
 
+    'Function that handles the mouse leaving a calendar box
     Private Sub calLeave(ByVal sender As System.Object, ByVal e As System.EventArgs)
         Dim control As Control = DirectCast(sender, Control)
         Dim tag As String = control.Tag
@@ -143,11 +170,13 @@ Public Class MonthView
         End If
     End Sub
 
+    'Get the number in teh label's name
     Private Function getLabelNum(wholeName As String) As String
         Dim substring As String = wholeName.Substring(5)
         Return wholeName.Substring(5)
     End Function
 
+    'Get the number in the picture box's name
     Private Function getPBoxNum(wholeName As String) As String
         Dim substring As String = wholeName.Substring(4)
         Return wholeName.Substring(4)
@@ -156,6 +185,8 @@ Public Class MonthView
     Private Sub labelCalendar(offset As Integer, numDays As Integer)
         Dim ctl As Control
         Dim dayNum As Integer = 1
+
+        'Clear all the previous labels, make sure all the boxes are shown
         For counter As Integer = 0 To 41
             ctl = ctlList.Item("label" + counter.ToString())
             ctl.Text = ""
@@ -165,12 +196,14 @@ Public Class MonthView
             ctl.Show()
         Next
 
+        'Number the days 
         For counter As Integer = offset To (offset + numDays - 1)
             ctl = ctlList.Item("label" + counter.ToString())
             ctl.Text = dayNum
             dayNum = dayNum + 1
         Next
 
+        'Hide excess weeks if only 4 weeks are required 
         If ((offset + numDays - 1) < 28) Then
             For counter As Integer = 28 To 41
                 ctl = ctlList.Item("pbox" + counter.ToString())
@@ -178,6 +211,8 @@ Public Class MonthView
                 ctl = ctlList.Item("label" + counter.ToString())
                 ctl.Hide()
             Next
+
+            'Hide excess weeks if only 5 weeks are required 
         ElseIf ((offset + numDays - 1) < 35) Then
             For counter As Integer = 35 To 41
                 ctl = ctlList.Item("pbox" + counter.ToString())
@@ -218,15 +253,21 @@ Public Class MonthView
             Dim row As DataRow
             Dim counter As Integer = 0
             For Each row In dt.Tables(0).Rows
+                'Make sure we only process the top row if more than one is returned 
                 If (counter = 0) Then
+
+                    'Label the calendar boxes
                     labelCalendar(row("startOffset"), row("numDays"))
+
+                    'Put the month and year on the calendar 
                     lblMonthName.Text = row("name").ToString() + " " + row("year").ToString()
                 End If
 
-                'Make sure we only process the top row if more than one is returned 
+
                 counter = counter + 1
             Next
 
+            'Catch any errors that occur and close the connection
         Catch ex As Exception
             If (connection.State = Data.ConnectionState.Open) Then
                 connection.Close()
@@ -250,15 +291,24 @@ Public Class MonthView
     End Sub
 
     Private Sub btnDay_Click(sender As Object, e As EventArgs) Handles btnDay.Click
+        'Create a new instance of the day view form, pass in the date
         Dim dayViewForm As New DayView(dtpDay.Value)
+
+        'Bring up the new instance of the form
         Call dayViewForm.Show()
     End Sub
 
     Private Sub btnMonth_Click(sender As Object, e As EventArgs) Handles btnMonth.Click
+
+        'Check to make sure a month and a year were both selected
         If ((cboxMonth.Text <> String.Empty) And (cboxYear.Text <> String.Empty)) Then
             labelCalForMonth(0, Integer.Parse(cboxYear.Text), cboxMonth.Text, 0)
+
+            'Alert the user that the month has not been selected
         ElseIf (cboxMonth.Text = String.Empty) Then
             MessageBox.Show("Please select a month", "Display Month View", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
+
+            'Alert the user that the year has not been selected
         ElseIf (cboxYear.Text = String.Empty) Then
             MessageBox.Show("Please select a year", "Display Month View", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
         End If
