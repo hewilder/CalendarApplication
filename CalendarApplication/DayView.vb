@@ -92,4 +92,14 @@ Public Class DayView
     Private Sub Form2_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
     End Sub
+
+    Private Sub btnAddEvent_Click(sender As Object, e As EventArgs) Handles btnAddEvent.Click
+        Dim newAddEvent As New AddEvent(myDate)
+        Call newAddEvent.Show()
+    End Sub
+
+    Private Sub update_click(sender As Object, e As EventArgs)
+        'Dim newUpdateEvent As New UpdateEvent(eventId)
+        'Call newUpdateEvent.Show()
+    End Sub
 End Class

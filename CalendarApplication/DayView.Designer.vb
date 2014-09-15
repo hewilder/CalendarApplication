@@ -31,7 +31,7 @@ Partial Class DayView
         Me.Label1 = New System.Windows.Forms.Label()
         Me.lblDate = New System.Windows.Forms.Label()
         Me.lblDayOfWeek = New System.Windows.Forms.Label()
-        Me.Button1 = New System.Windows.Forms.Button()
+        Me.btnAddEvent = New System.Windows.Forms.Button()
         Me.Panel1.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -131,27 +131,27 @@ Partial Class DayView
         Me.lblDayOfWeek.TabIndex = 8
         Me.lblDayOfWeek.Text = "Tuesday"
         '
-        'Button1
+        'btnAddEvent
         '
-        Me.Button1.Location = New System.Drawing.Point(477, 97)
-        Me.Button1.Name = "Button1"
-        Me.Button1.Size = New System.Drawing.Size(159, 23)
-        Me.Button1.TabIndex = 13
-        Me.Button1.Text = "Add an Event"
-        Me.Button1.UseVisualStyleBackColor = True
+        Me.btnAddEvent.Location = New System.Drawing.Point(477, 97)
+        Me.btnAddEvent.Name = "btnAddEvent"
+        Me.btnAddEvent.Size = New System.Drawing.Size(159, 23)
+        Me.btnAddEvent.TabIndex = 13
+        Me.btnAddEvent.Text = "Add an Event"
+        Me.btnAddEvent.UseVisualStyleBackColor = True
         '
-        'Form2
+        'DayView
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.White
         Me.ClientSize = New System.Drawing.Size(648, 582)
-        Me.Controls.Add(Me.Button1)
+        Me.Controls.Add(Me.btnAddEvent)
         Me.Controls.Add(Me.lblDayOfWeek)
         Me.Controls.Add(Me.lblDate)
         Me.Controls.Add(Me.Panel1)
         Me.ForeColor = System.Drawing.Color.Black
-        Me.Name = "Form2"
+        Me.Name = "DayView"
         Me.Text = "Calendar Application - Day View"
         Me.Panel1.ResumeLayout(False)
         Me.Panel1.PerformLayout()
@@ -162,7 +162,7 @@ Partial Class DayView
     Friend WithEvents Panel1 As System.Windows.Forms.Panel
     Friend WithEvents lblDate As System.Windows.Forms.Label
     Friend WithEvents lblDayOfWeek As System.Windows.Forms.Label
-    Friend WithEvents Button1 As System.Windows.Forms.Button
+    Friend WithEvents btnAddEvent As System.Windows.Forms.Button
     Friend WithEvents Button3 As System.Windows.Forms.Button
     Friend WithEvents Button2 As System.Windows.Forms.Button
     Friend WithEvents Label4 As System.Windows.Forms.Label

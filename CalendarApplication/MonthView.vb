@@ -170,7 +170,7 @@ Public Class MonthView
         End If
     End Sub
 
-    'Get the number in teh label's name
+    'Get the number in the label's name
     Private Function getLabelNum(wholeName As String) As String
         Dim substring As String = wholeName.Substring(5)
         Return wholeName.Substring(5)
@@ -317,7 +317,7 @@ Public Class MonthView
 
     'Open the add event form
     Private Sub btnAddEvent_Click(sender As Object, e As EventArgs) Handles btnAddEvent.Click
-        Dim newAddEvent As New AddEvent
+        Dim newAddEvent As New AddEvent()
         Call newAddEvent.Show()
     End Sub
 End Class

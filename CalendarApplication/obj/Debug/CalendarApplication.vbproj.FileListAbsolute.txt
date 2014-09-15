@@ -10,3 +10,4 @@ C:\Users\Hannah\Documents\Visual Studio 2012\Projects\CalendarApplication\Calend
 C:\Users\Hannah\Documents\Visual Studio 2012\Projects\CalendarApplication\CalendarApplication\obj\Debug\CalendarApplication.pdb
 C:\Users\Hannah\Documents\Visual Studio 2012\Projects\CalendarApplication\CalendarApplication\obj\Debug\CalendarApplication.AddEvent.resources
 C:\Users\Hannah\Documents\Visual Studio 2012\Projects\CalendarApplication\CalendarApplication\obj\Debug\CalendarApplication.DayView.resources
+C:\Users\Hannah\Documents\Visual Studio 2012\Projects\CalendarApplication\CalendarApplication\obj\Debug\CalendarApplication.UpdateEvent.resources

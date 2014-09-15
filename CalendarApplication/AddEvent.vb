@@ -10,7 +10,6 @@ Public Class AddEvent
         Dim startDateArr() As String = startDateTime.Date.ToString().Split
         Dim startDate As String = startDateArr(0)
 
-
         Dim sep As Char() = {"."c}
         Dim startTimeArr() As String = startDateTime.TimeOfDay.ToString().Split(sep)
         Dim startTime As String = startTimeArr(0)
@@ -115,5 +114,17 @@ Public Class AddEvent
 
             afterSuccessfulInsert(startDate)
         End If
+    End Sub
+
+    'Method for setting the start date automatically (used if coming from dayView)
+    Public Sub New(startDate As Date)
+        InitializeComponent()
+        dtpStartDate.Value = startDate
+        dtpEndDate.Value = startDate
+
+    End Sub
+
+    Public Sub New()
+        InitializeComponent()
     End Sub
 End Class
