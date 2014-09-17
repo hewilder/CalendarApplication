@@ -73,7 +73,7 @@ Public Class UpdateEvent
     End Function
 
     'Takes a start date and time (together), takes a end date and time (together), a title, and a description
-    Private Function insertEvent(startDateTime As Date, endDateTime As Date, title As String, details As String) As Integer
+    Private Function updateEvent(startDateTime As Date, endDateTime As Date, title As String, details As String) As Integer
 
         'Take care of formatting issues
         Dim startDateArr() As String = startDateTime.Date.ToString().Split
@@ -154,16 +154,35 @@ Public Class UpdateEvent
 
     'Action occurs on form load 
     Private Sub AddEvent_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        Dim savedEvent As DataRow = getEventData()
+        If (savedEvent Is Nothing) Then
+            MessageBox.Show("Error retrieving saved event information", "Event Retrival Error Occurred", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            Return
+        End If
+        txtTitle.Text = savedEvent("title").ToString()
+        txtDescription.Text = savedEvent("description").ToString()
+
+        Dim startDateArr() As String = savedEvent("startDate").Split("-")
+        Dim startTimeArr() As String = savedEvent("startTime").Split(":")
+
+        dtpStartDate.Value = New Date(startDateArr(0), startDateArr(1), startDateArr(2))
+        dtpStartTime.Value = New Date(0, 0, 0, startTimeArr(0), startTimeArr(1), startTimeArr(2))
+
+        Dim endDateArr() As String = savedEvent("endDate").Split("-")
+        Dim endTimeArr() As String = savedEvent("endTime").Split(":")
+
+        dtpEndDate.Value = New Date(endDateArr(0), endDateArr(1), endDateArr(2))
+        dtpEndTime.Value = New Date(0, 0, 0, endTimeArr(0), endTimeArr(1), endTimeArr(2))
 
         
     End Sub
 
     'Action occurs on button click
     Private Sub btnSave_Click(sender As Object, e As EventArgs)
-        '-------------------------------------------------------
-        'Example of inserting a new event (remove after testing)
-        '-------------------------------------------------------
-        Dim result As Integer = insertEvent(DateTime.Now, DateTime.Now, "newEvent", "new event description")
+        Dim wholeStartDate As Date = New Date(dtpStartDate.Value.Year, dtpStartDate.Value.Month, dtpStartDate.Value.Day, dtpStartTime.Value.Hour, dtpStartTime.Value.Minute, dtpStartTime.Value.Second)
+        Dim wholeEndDate As Date = New Date(dtpEndDate.Value.Year, dtpEndDate.Value.Month, dtpEndDate.Value.Day, dtpEndTime.Value.Hour, dtpEndTime.Value.Minute, dtpEndTime.Value.Second)
+
+        Dim result As Integer = updateEvent(wholeStartDate, wholeEndDate, txtTitle.Text, txtDescription.Text)
         If (result = 0) Then
             Dim startDateArr() As String = DateTime.Now.Date.ToString().Split
             Dim startDate As String = startDateArr(0)
