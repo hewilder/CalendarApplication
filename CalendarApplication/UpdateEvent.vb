@@ -159,7 +159,7 @@ Public Class UpdateEvent
     End Sub
 
     'Action occurs on button click
-    Private Sub btnSave_Click(sender As Object, e As EventArgs) Handles btnSave.Click
+    Private Sub btnSave_Click(sender As Object, e As EventArgs)
         '-------------------------------------------------------
         'Example of inserting a new event (remove after testing)
         '-------------------------------------------------------

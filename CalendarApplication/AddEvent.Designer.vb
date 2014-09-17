@@ -48,6 +48,8 @@ Partial Class AddEvent
         '
         Me.dtpStartDate.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
         Me.dtpStartDate.Location = New System.Drawing.Point(12, 170)
+        Me.dtpStartDate.MaxDate = New Date(2015, 12, 31, 0, 0, 0, 0)
+        Me.dtpStartDate.MinDate = New Date(2014, 1, 1, 0, 0, 0, 0)
         Me.dtpStartDate.Name = "dtpStartDate"
         Me.dtpStartDate.Size = New System.Drawing.Size(135, 20)
         Me.dtpStartDate.TabIndex = 1
@@ -56,6 +58,8 @@ Partial Class AddEvent
         '
         Me.dtpEndDate.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
         Me.dtpEndDate.Location = New System.Drawing.Point(12, 215)
+        Me.dtpEndDate.MaxDate = New Date(2015, 12, 31, 0, 0, 0, 0)
+        Me.dtpEndDate.MinDate = New Date(2014, 1, 1, 0, 0, 0, 0)
         Me.dtpEndDate.Name = "dtpEndDate"
         Me.dtpEndDate.Size = New System.Drawing.Size(135, 20)
         Me.dtpEndDate.TabIndex = 2
@@ -83,6 +87,7 @@ Partial Class AddEvent
         Me.dtpEndTime.Format = System.Windows.Forms.DateTimePickerFormat.Time
         Me.dtpEndTime.Location = New System.Drawing.Point(165, 215)
         Me.dtpEndTime.Name = "dtpEndTime"
+        Me.dtpEndTime.ShowUpDown = True
         Me.dtpEndTime.Size = New System.Drawing.Size(135, 20)
         Me.dtpEndTime.TabIndex = 6
         '
@@ -100,8 +105,10 @@ Partial Class AddEvent
         Me.dtpStartTime.Format = System.Windows.Forms.DateTimePickerFormat.Time
         Me.dtpStartTime.Location = New System.Drawing.Point(165, 170)
         Me.dtpStartTime.Name = "dtpStartTime"
+        Me.dtpStartTime.ShowUpDown = True
         Me.dtpStartTime.Size = New System.Drawing.Size(135, 20)
         Me.dtpStartTime.TabIndex = 9
+        Me.dtpStartTime.Value = New Date(1753, 1, 1, 0, 0, 0, 0)
         '
         'txtTitle
         '

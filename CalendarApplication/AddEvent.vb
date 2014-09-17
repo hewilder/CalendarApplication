@@ -122,12 +122,15 @@ Public Class AddEvent
         InitializeComponent()
         dtpStartDate.Value = startDate
         dtpEndDate.Value = startDate
-
+        dtpStartTime.Value = DateTime.Now()
+        dtpEndTime.Value = DateTime.Now()
     End Sub
 
     Public Sub New()
         InitializeComponent()
         dtpStartDate.Value = DateTime.Now()
         dtpEndDate.Value = DateTime.Now()
+        dtpStartTime.Value = DateTime.Now()
+        dtpEndTime.Value = DateTime.Now()
     End Sub
 End Class
