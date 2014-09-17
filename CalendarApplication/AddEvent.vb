@@ -104,10 +104,11 @@ Public Class AddEvent
 
     'Action occurs on button click
     Private Sub btnSave_Click(sender As Object, e As EventArgs) Handles btnSave.Click
-        '-------------------------------------------------------
-        'Example of inserting a new event (remove after testing)
-        '-------------------------------------------------------
-        Dim result As Integer = insertEvent(DateTime.Now, DateTime.Now, "newEvent", "new event description")
+
+        Dim wholeStartDate As Date = New Date(dtpStartDate.Value.Year, dtpStartDate.Value.Month, dtpStartDate.Value.Day, dtpStartTime.Value.Hour, dtpStartTime.Value.Minute, dtpStartTime.Value.Second)
+        Dim wholeEndDate As Date = New Date(dtpEndDate.Value.Year, dtpEndDate.Value.Month, dtpEndDate.Value.Day, dtpEndTime.Value.Hour, dtpEndTime.Value.Minute, dtpEndTime.Value.Second)
+
+        Dim result As Integer = insertEvent(wholeStartDate, wholeEndDate, txtTitle.Text, txtDescription.Text)
         If (result = 0) Then
             Dim startDateArr() As String = DateTime.Now.Date.ToString().Split
             Dim startDate As String = startDateArr(0)
@@ -126,5 +127,7 @@ Public Class AddEvent
 
     Public Sub New()
         InitializeComponent()
+        dtpStartDate.Value = DateTime.Now()
+        dtpEndDate.Value = DateTime.Now()
     End Sub
 End Class
