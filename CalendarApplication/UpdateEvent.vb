@@ -31,7 +31,7 @@ Public Class UpdateEvent
     'Requries the event ID (obtained by constructor)
     '****Should be checked for null return, which is what it will return on error*****
     Private Function getEventData() As DataRow
-        Dim connectionString As String = "Server=127.0.0.1; Database=calendar; Uid=root;Pwd=teamsoftware"
+        Dim connectionString As String = "Server=orion.csl.mtu.edu; Database=hewample; Uid=hewample;Pwd=hewample"
         Dim connection As New MySqlConnection(connectionString)
         Dim da As New MySqlDataAdapter
         Dim dt As DataSet = New DataSet
@@ -90,7 +90,7 @@ Public Class UpdateEvent
         Dim endTimeArr() As String = endDateTime.TimeOfDay.ToString().Split(sep)
         Dim endTime As String = endTimeArr(0)
 
-        Dim connectionString As String = "Server=127.0.0.1; Database=calendar; Uid=root;Pwd=teamsoftware"
+        Dim connectionString As String = "Server=orion.csl.mtu.edu; Database=hewample; Uid=hewample;Pwd=hewample"
         Dim connection As New MySqlConnection(connectionString)
         Dim da As New MySqlDataAdapter
         Dim dt As DataSet = New DataSet
