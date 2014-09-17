@@ -3,6 +3,7 @@ Imports MySql.Data.MySqlClient
 
 Public Class DayView
     Public myDate As Date
+    Dim ctlList As Dictionary(Of String, Control) = New Dictionary(Of String, Control)
 
     Public Sub New(ByVal dateValue As Date)
         InitializeComponent()
@@ -90,6 +91,91 @@ Public Class DayView
     End Function
 
     Private Sub Form2_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        Dim events As DataRowCollection = getEvents()
+
+        addCtrls(events.Count - 1, events)
+
+        'Dim row As DataRow
+        'For Each row In getEvents()
+
+        'Next
+
+    End Sub
+
+
+    Private Sub addCtrls(numEvents As Integer, events As DataRowCollection)
+        Dim startLabels(numEvents) As Label
+        Dim endLabels(numEvents) As Label
+        Dim titleLabels(numEvents) As Label
+        Dim descTexts(numEvents) As TextBox
+        Dim updateButtons(numEvents) As Button
+        Dim deleteButtons(numEvents) As Button
+
+        Dim topOffset As Integer = 24
+        Dim leftOffset As Integer = 17
+
+        For counter As Integer = 0 To (numEvents - 1)
+            startLabels(counter) = New Label
+            startLabels(counter).BackColor = Color.White
+            startLabels(counter).BorderStyle = BorderStyle.None
+            startLabels(counter).MinimumSize = New Size(68, 20)
+            startLabels(counter).TextAlign = ContentAlignment.BottomCenter
+            startLabels(counter).Font = New Font("Microsoft Sans Serif", 12, FontStyle.Bold)
+            startLabels(counter).Location = New Point(leftOffset, (topOffset + (100 * counter)))
+            startLabels(counter).Text = events.Item(counter).Item("startTime")
+            Panel1.Controls.Add(startLabels(counter))
+
+            endLabels(counter) = New Label
+            endLabels(counter).BackColor = Color.White
+            endLabels(counter).BorderStyle = BorderStyle.None
+            endLabels(counter).MinimumSize = New Size(68, 20)
+            endLabels(counter).TextAlign = ContentAlignment.BottomCenter
+            endLabels(counter).Font = New Font("Microsoft Sans Serif", 12, FontStyle.Bold)
+            endLabels(counter).Location = New Point(leftOffset, (topOffset + 30 + (100 * counter)))
+            endLabels(counter).Text = events.Item(counter).Item("endTime")
+            Panel1.Controls.Add(endLabels(counter))
+
+            titleLabels(counter) = New Label
+            titleLabels(counter).BackColor = Color.White
+            titleLabels(counter).BorderStyle = BorderStyle.None
+            titleLabels(counter).MinimumSize = New Size(68, 20)
+            titleLabels(counter).TextAlign = ContentAlignment.BottomCenter
+            titleLabels(counter).Font = New Font("Microsoft Sans Serif", 12, FontStyle.Bold)
+            titleLabels(counter).Location = New Point(leftOffset + 120, (topOffset + (100 * counter)))
+            titleLabels(counter).Text = events.Item(counter).Item("title")
+            Panel1.Controls.Add(titleLabels(counter))
+
+            descTexts(counter) = New TextBox
+            descTexts(counter).BackColor = Color.White
+            descTexts(counter).BorderStyle = BorderStyle.None
+            descTexts(counter).MinimumSize = New Size(68, 20)
+            descTexts(counter).Font = New Font("Microsoft Sans Serif", 12, FontStyle.Bold)
+            descTexts(counter).Location = New Point(leftOffset + 120, (topOffset + 30 + (100 * counter)))
+            descTexts(counter).Text = events.Item(counter).Item("description")
+            descTexts(counter).ScrollBars = ScrollBars.Vertical
+            descTexts(counter).ReadOnly = True
+            Panel1.Controls.Add(descTexts(counter))
+
+            updateButtons(counter) = New Button
+            updateButtons(counter).BackColor = Color.White
+            updateButtons(counter).MinimumSize = New Size(68, 20)
+            updateButtons(counter).TextAlign = ContentAlignment.BottomCenter
+            updateButtons(counter).Font = New Font("Microsoft Sans Serif", 8.25, FontStyle.Regular)
+            updateButtons(counter).Location = New Point(400, (30 + (100 * counter)))
+            updateButtons(counter).Text = "Update"
+            AddHandler updateButtons(counter).Click, AddressOf Me.update_click
+            Panel1.Controls.Add(updateButtons(counter))
+
+            deleteButtons(counter) = New Button
+            deleteButtons(counter).BackColor = Color.White
+            deleteButtons(counter).MinimumSize = New Size(68, 20)
+            deleteButtons(counter).TextAlign = ContentAlignment.BottomCenter
+            deleteButtons(counter).Font = New Font("Microsoft Sans Serif", 8.25, FontStyle.Regular)
+            deleteButtons(counter).Location = New Point(500, (30 + (100 * counter)))
+            deleteButtons(counter).Text = "Delete"
+            AddHandler deleteButtons(counter).Click, AddressOf Me.delete_click
+            Panel1.Controls.Add(deleteButtons(counter))
+        Next
 
     End Sub
 
@@ -99,6 +185,11 @@ Public Class DayView
     End Sub
 
     Private Sub update_click(sender As Object, e As EventArgs)
+        'Dim newUpdateEvent As New UpdateEvent(eventId)
+        'Call newUpdateEvent.Show()
+    End Sub
+
+    Private Sub delete_click(sender As Object, e As EventArgs)
         'Dim newUpdateEvent As New UpdateEvent(eventId)
         'Call newUpdateEvent.Show()
     End Sub
