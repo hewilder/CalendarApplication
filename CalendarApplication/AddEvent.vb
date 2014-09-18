@@ -61,17 +61,25 @@ Public Class AddEvent
     'Make sure to use this after a successful insert, it will close all instances of the form 
     'displaying the date on which this event was added and open a new one for the start date of the new event
     Private Sub afterSuccessfulInsert(startDate As String)
+        Dim dayViewForm As DayView
+        Dim closeForm As DayView = Nothing
         For Each frm In My.Application.OpenForms
             Try
-                Dim dayViewForm As DayView = DirectCast(frm, DayView)
+                dayViewForm = DirectCast(frm, DayView)
                 If (dayViewForm.myDate = startDate) Then
-                    dayViewForm.Close()
+                    closeForm = dayViewForm
                 End If
             Catch ex As Exception
 
             End Try
 
         Next
+
+        If (Not IsNothing(closeForm)) Then
+            closeForm.Close()
+        End If
+
+
 
         Dim dateArr As String() = startDate.Split("/")
         Dim newDayViewForm As DayView = New DayView(New Date(dateArr(2), dateArr(0), dateArr(1)))
@@ -110,7 +118,7 @@ Public Class AddEvent
 
         Dim result As Integer = insertEvent(wholeStartDate, wholeEndDate, txtTitle.Text, txtDescription.Text)
         If (result = 0) Then
-            Dim startDateArr() As String = DateTime.Now.Date.ToString().Split
+            Dim startDateArr() As String = wholeStartDate.Date.ToString().Split
             Dim startDate As String = startDateArr(0)
 
             afterSuccessfulInsert(startDate)
