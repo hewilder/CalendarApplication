@@ -75,7 +75,7 @@ Public Class UpdateEvent
     End Function
 
     'Takes a start date and time (together), takes a end date and time (together), a title, and a description
-    Private Function insertEvent(startDateTime As Date, endDateTime As Date, title As String, details As String) As Integer
+    Private Function updateEvent(startDateTime As Date, endDateTime As Date, title As String, details As String) As Integer
 
         'Take care of formatting issues
         Dim startDateArr() As String = startDateTime.Date.ToString().Split
@@ -103,7 +103,7 @@ Public Class UpdateEvent
             Dim sqlComm As New MySqlCommand
 
             'Construct the query and open the connection
-            sqlComm.CommandText = "UPDATE events SET title = '" + title + "', details = '" + details + "', startTime = TIME '" + startTime + "', startDate = '" + formatDate(startDate) + "', endTime = TIME '" + endTime + "', endDate = DATE '" + formatDate(endDate) + "' WHERE id = " + myId.ToString() + ";"
+            sqlComm.CommandText = "UPDATE events SET title = '" + escapeMYSQL(title) + "', details = '" + escapeMYSQL(details) + "', startTime = TIME '" + startTime + "', startDate = '" + formatDate(startDate) + "', endTime = TIME '" + endTime + "', endDate = DATE '" + formatDate(endDate) + "' WHERE id = " + myId.ToString() + ";"
 
             sqlComm.Connection = connection
             sqlComm.ExecuteNonQuery()
@@ -114,7 +114,7 @@ Public Class UpdateEvent
                 connection.Close()
             End If
 
-            MessageBox.Show("Event was not saved, the following error occurred:" + Environment.NewLine + ex.Message, "Event Insertion Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            MessageBox.Show("Event was not saved, the following error occurred:" + Environment.NewLine + ex.Message, "Event Update Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
 
             'Return 1 if there was an error and we should keep the window open
             Return 1
@@ -133,9 +133,10 @@ Public Class UpdateEvent
 
     'Make sure to use this after a successful insert, it will close all instances of the form 
     'displaying the date on which this event was added and open a new one for the start date of the new event
-    Private Sub afterSuccessfulInsert(startDate As String)
+    Private Sub afterSuccessfulUpdate(startDate As String)
         Dim dayViewForm As DayView
         Dim closeForm As DayView = Nothing
+        Dim loc As Point
         For Each frm In My.Application.OpenForms
             Try
                 dayViewForm = DirectCast(frm, DayView)
@@ -149,13 +150,16 @@ Public Class UpdateEvent
         Next
 
         If (Not IsNothing(closeForm)) Then
+            loc = New Point(closeForm.Location.X, closeForm.Location.Y)
             closeForm.Close()
         End If
 
         Dim dateArr As String() = startDate.Split("/")
         Dim newDayViewForm As DayView = New DayView(New Date(dateArr(2), dateArr(0), dateArr(1)))
+
         'Open day view form
         Call newDayViewForm.Show()
+        newDayViewForm.Location = loc
 
         'Close update event form
         Me.Close()
@@ -180,30 +184,57 @@ Public Class UpdateEvent
     End Sub
 
     'Action occurs on button click
-    Private Sub btnSave_Click(sender As Object, e As EventArgs)
-        
-        Dim wholeStartDate As Date = New Date(dtpStartDate.Value.Year, dtpStartDate.Value.Month, dtpStartDate.Value.Day, dtpStartTime.Value.Hour, dtpStartTime.Value.Minute, dtpStartTime.Value.Second)
-        Dim wholeEndDate As Date = New Date(dtpEndDate.Value.Year, dtpEndDate.Value.Month, dtpEndDate.Value.Day, dtpEndTime.Value.Hour, dtpEndTime.Value.Minute, dtpEndTime.Value.Second)
-
-        Dim result As Integer = insertEvent(wholeStartDate, wholeEndDate, txtTitle.Text, txtDescription.Text)
-        If (result = 0) Then
-            Dim startDateArr() As String = wholeStartDate.Date.ToString().Split
-            Dim startDate As String = startDateArr(0)
-
-            afterSuccessfulInsert(startDate)
-        End If
-    End Sub
-
     Private Sub btnSave_Click_1(sender As Object, e As EventArgs) Handles btnSave.Click
+
+        If (IsNothing(dtpEndDate.Value)) Then
+            MessageBox.Show("Please enter a value for the end date of this event", "Event Information Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
+            Return
+        End If
+
+        If (IsNothing(dtpEndTime.Value)) Then
+            MessageBox.Show("Please enter a value for the end time of this event", "Event Information Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
+            Return
+        End If
+
+        If (IsNothing(dtpStartTime.Value)) Then
+            MessageBox.Show("Please enter a value for the start time of this event", "Event Information Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
+            Return
+        End If
+
+        If (IsNothing(dtpStartDate.Value)) Then
+            MessageBox.Show("Please enter a value for the start date of this event", "Event Information Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
+            Return
+        End If
+
+        If (dtpStartDate.Value > dtpEndDate.Value) Then
+            MessageBox.Show("Your event appears to be ending before it starts, please check your input and resave", "Event Information Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
+            Return
+        End If
+
+        If (dtpStartDate.Value.Day = dtpEndDate.Value.Day) Then
+            If (dtpStartTime.Value > dtpEndTime.Value) Then
+                MessageBox.Show("Your event appears to be ending before it starts, please check your input and resave", "Event Information Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
+                Return
+            End If
+        End If
+
         Dim wholeStartDate As Date = New Date(dtpStartDate.Value.Year, dtpStartDate.Value.Month, dtpStartDate.Value.Day, dtpStartTime.Value.Hour, dtpStartTime.Value.Minute, dtpStartTime.Value.Second)
         Dim wholeEndDate As Date = New Date(dtpEndDate.Value.Year, dtpEndDate.Value.Month, dtpEndDate.Value.Day, dtpEndTime.Value.Hour, dtpEndTime.Value.Minute, dtpEndTime.Value.Second)
 
-        Dim result As Integer = insertEvent(wholeStartDate, wholeEndDate, txtTitle.Text, txtDescription.Text)
+        Dim result As Integer = updateEvent(wholeStartDate, wholeEndDate, txtTitle.Text, txtDescription.Text)
         If (result = 0) Then
             Dim startDateArr() As String = wholeStartDate.Date.ToString().Split
             Dim startDate As String = startDateArr(0)
 
-            afterSuccessfulInsert(startDate)
+            afterSuccessfulUpdate(startDate)
         End If
     End Sub
+
+    Public Shared Function escapeMYSQL(original As String) As String
+        original = original.Replace("\", "\\")
+        original = original.Replace("'", "\'")
+        'original = original.Replace("""", "\""")
+
+        Return original
+    End Function
 End Class

@@ -31,9 +31,9 @@ Partial Class DayView
         'Panel1
         '
         Me.Panel1.AutoScroll = True
-        Me.Panel1.Location = New System.Drawing.Point(12, 127)
+        Me.Panel1.Location = New System.Drawing.Point(10, 127)
         Me.Panel1.Name = "Panel1"
-        Me.Panel1.Size = New System.Drawing.Size(624, 443)
+        Me.Panel1.Size = New System.Drawing.Size(758, 443)
         Me.Panel1.TabIndex = 0
         '
         'lblDate
@@ -41,7 +41,7 @@ Partial Class DayView
         Me.lblDate.AutoSize = True
         Me.lblDate.Font = New System.Drawing.Font("Microsoft Sans Serif", 36.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblDate.ForeColor = System.Drawing.Color.Black
-        Me.lblDate.Location = New System.Drawing.Point(2, 69)
+        Me.lblDate.Location = New System.Drawing.Point(0, 69)
         Me.lblDate.Name = "lblDate"
         Me.lblDate.Size = New System.Drawing.Size(385, 55)
         Me.lblDate.TabIndex = 7
@@ -52,7 +52,7 @@ Partial Class DayView
         Me.lblDayOfWeek.AutoSize = True
         Me.lblDayOfWeek.Font = New System.Drawing.Font("Microsoft Sans Serif", 21.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblDayOfWeek.ForeColor = System.Drawing.Color.DarkGray
-        Me.lblDayOfWeek.Location = New System.Drawing.Point(6, 36)
+        Me.lblDayOfWeek.Location = New System.Drawing.Point(4, 36)
         Me.lblDayOfWeek.Name = "lblDayOfWeek"
         Me.lblDayOfWeek.Size = New System.Drawing.Size(134, 33)
         Me.lblDayOfWeek.TabIndex = 8
@@ -60,9 +60,9 @@ Partial Class DayView
         '
         'btnAddEvent
         '
-        Me.btnAddEvent.Location = New System.Drawing.Point(477, 97)
+        Me.btnAddEvent.Location = New System.Drawing.Point(610, 97)
         Me.btnAddEvent.Name = "btnAddEvent"
-        Me.btnAddEvent.Size = New System.Drawing.Size(159, 23)
+        Me.btnAddEvent.Size = New System.Drawing.Size(160, 23)
         Me.btnAddEvent.TabIndex = 13
         Me.btnAddEvent.Text = "Add an Event"
         Me.btnAddEvent.UseVisualStyleBackColor = True
@@ -72,7 +72,7 @@ Partial Class DayView
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.White
-        Me.ClientSize = New System.Drawing.Size(648, 582)
+        Me.ClientSize = New System.Drawing.Size(782, 582)
         Me.Controls.Add(Me.btnAddEvent)
         Me.Controls.Add(Me.lblDayOfWeek)
         Me.Controls.Add(Me.lblDate)

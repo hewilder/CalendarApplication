@@ -31,7 +31,7 @@ Public Class AddEvent
             Dim sqlComm As New MySqlCommand
 
             'Construct the query and open the connection
-            sqlComm.CommandText = "INSERT INTO events SET title = '" + title + "', details = '" + details + "', startTime = TIME '" + startTime + "', startDate = '" + formatDate(startDate) + "', endTime = TIME '" + endTime + "', endDate = DATE '" + formatDate(endDate) + "';"
+            sqlComm.CommandText = "INSERT INTO events SET title = '" + UpdateEvent.escapeMYSQL(title) + "', details = '" + UpdateEvent.escapeMYSQL(details) + "', startTime = TIME '" + startTime + "', startDate = '" + formatDate(startDate) + "', endTime = TIME '" + endTime + "', endDate = DATE '" + formatDate(endDate) + "';"
 
             sqlComm.Connection = connection
             sqlComm.ExecuteNonQuery()
@@ -64,6 +64,7 @@ Public Class AddEvent
     Private Sub afterSuccessfulInsert(startDate As String)
         Dim dayViewForm As DayView
         Dim closeForm As DayView = Nothing
+        Dim loc As Point = Nothing
         For Each frm In My.Application.OpenForms
             Try
                 dayViewForm = DirectCast(frm, DayView)
@@ -77,6 +78,7 @@ Public Class AddEvent
         Next
 
         If (Not IsNothing(closeForm)) Then
+            loc = New Point(closeForm.Location.X, closeForm.Location.Y)
             closeForm.Close()
         End If
 
@@ -84,8 +86,10 @@ Public Class AddEvent
 
         Dim dateArr As String() = startDate.Split("/")
         Dim newDayViewForm As DayView = New DayView(New Date(dateArr(2), dateArr(0), dateArr(1)))
+
         'Open day view form
         Call newDayViewForm.Show()
+        newDayViewForm.Location = loc
 
         'Close add event form
         Me.Close()
@@ -113,6 +117,38 @@ Public Class AddEvent
 
     'Action occurs on button click
     Private Sub btnSave_Click(sender As Object, e As EventArgs) Handles btnSave.Click
+
+        If (IsNothing(dtpEndDate.Value)) Then
+            MessageBox.Show("Please enter a value for the end date of this event", "Event Information Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
+            Return
+        End If
+
+        If (IsNothing(dtpEndTime.Value)) Then
+            MessageBox.Show("Please enter a value for the end time of this event", "Event Information Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
+            Return
+        End If
+
+        If (IsNothing(dtpStartTime.Value)) Then
+            MessageBox.Show("Please enter a value for the start time of this event", "Event Information Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
+            Return
+        End If
+
+        If (IsNothing(dtpStartDate.Value)) Then
+            MessageBox.Show("Please enter a value for the start date of this event", "Event Information Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
+            Return
+        End If
+
+        If (dtpStartDate.Value > dtpEndDate.Value) Then
+            MessageBox.Show("Your event appears to be ending before it starts, please check your input and resave", "Event Information Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
+            Return
+        End If
+
+        If (dtpStartDate.Value.Day = dtpEndDate.Value.Day) Then
+            If (dtpStartTime.Value > dtpEndTime.Value) Then
+                MessageBox.Show("Your event appears to be ending before it starts, please check your input and resave", "Event Information Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
+                Return
+            End If
+        End If
 
         Dim wholeStartDate As Date = New Date(dtpStartDate.Value.Year, dtpStartDate.Value.Month, dtpStartDate.Value.Day, dtpStartTime.Value.Hour, dtpStartTime.Value.Minute, dtpStartTime.Value.Second)
         Dim wholeEndDate As Date = New Date(dtpEndDate.Value.Year, dtpEndDate.Value.Month, dtpEndDate.Value.Day, dtpEndTime.Value.Hour, dtpEndTime.Value.Minute, dtpEndTime.Value.Second)

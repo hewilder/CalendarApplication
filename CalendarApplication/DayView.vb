@@ -58,6 +58,8 @@ Public Class DayView
                 connection.Close()
             End If
 
+            MessageBox.Show("Events for this day could not be retrieved, the following error occurred:" + Environment.NewLine + ex.Message, "Event Retreival Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+
         End Try
     End Function
 
@@ -70,6 +72,7 @@ Public Class DayView
     Private Sub afterSuccessfulDelete(startDate As String)
         Dim dayViewForm As DayView
         Dim closeForm As DayView = Nothing
+        Dim loc As Point
         For Each frm In My.Application.OpenForms
             Try
                 dayViewForm = DirectCast(frm, DayView)
@@ -83,13 +86,16 @@ Public Class DayView
         Next
 
         If (Not IsNothing(closeForm)) Then
+            loc = New Point(closeForm.Location.X, closeForm.Location.Y)
             closeForm.Close()
         End If
 
         Dim dateArr As String() = startDate.Split("/")
         Dim newDayViewForm As DayView = New DayView(New Date(dateArr(2), dateArr(0), dateArr(1)))
+
         'Open day view form
         Call newDayViewForm.Show()
+        newDayViewForm.Location = loc
 
         'Close add event form
         Me.Close()
@@ -119,6 +125,8 @@ Public Class DayView
             If (connection.State = Data.ConnectionState.Open) Then
                 connection.Close()
             End If
+
+            MessageBox.Show("Event was not deleted, the following error occurred:" + Environment.NewLine + ex.Message, "Event Deletion Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
 
             Return 1
         End Try
@@ -181,7 +189,7 @@ Public Class DayView
             titleLabels(counter) = New Label
             titleLabels(counter).BackColor = Color.White
             titleLabels(counter).BorderStyle = BorderStyle.None
-            titleLabels(counter).MinimumSize = New Size(68, 20)
+            titleLabels(counter).MinimumSize = New Size(300, 20)
             titleLabels(counter).TextAlign = ContentAlignment.BottomLeft
             titleLabels(counter).Font = New Font("Microsoft Sans Serif", 12, FontStyle.Bold)
             titleLabels(counter).Location = New Point(leftOffset + 130, (topOffset + (100 * counter)))
@@ -203,10 +211,10 @@ Public Class DayView
 
             updateButtons(counter) = New Button
             updateButtons(counter).BackColor = Color.White
-            updateButtons(counter).MinimumSize = New Size(68, 20)
+            updateButtons(counter).MinimumSize = New Size(70, 20)
             updateButtons(counter).TextAlign = ContentAlignment.BottomCenter
             updateButtons(counter).Font = New Font("Microsoft Sans Serif", 8.25, FontStyle.Regular)
-            updateButtons(counter).Location = New Point(500, (25 + (100 * counter)))
+            updateButtons(counter).Location = New Point(600, (25 + (100 * counter)))
             updateButtons(counter).Text = "Update"
             updateButtons(counter).Tag = events.Item(counter).Item("id").ToString()
             AddHandler updateButtons(counter).Click, AddressOf Me.update_click
@@ -214,10 +222,10 @@ Public Class DayView
 
             deleteButtons(counter) = New Button
             deleteButtons(counter).BackColor = Color.White
-            deleteButtons(counter).MinimumSize = New Size(68, 20)
+            deleteButtons(counter).MinimumSize = New Size(70, 20)
             deleteButtons(counter).TextAlign = ContentAlignment.BottomCenter
             deleteButtons(counter).Font = New Font("Microsoft Sans Serif", 8.25, FontStyle.Regular)
-            deleteButtons(counter).Location = New Point(600, (25 + (100 * counter)))
+            deleteButtons(counter).Location = New Point(683, (25 + (100 * counter)))
             deleteButtons(counter).Tag = events.Item(counter).Item("id").ToString()
             deleteButtons(counter).Text = "Delete"
             AddHandler deleteButtons(counter).Click, AddressOf Me.delete_click

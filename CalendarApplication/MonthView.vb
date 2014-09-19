@@ -102,7 +102,7 @@ Public Class MonthView
         'Take action if th picture box was a valid day
         If (label.Text <> String.Empty) Then
             Dim formatDate As DateTime
-            formatDate = DateTime.Parse(getLabelNum(label.Tag) + lblMonthName.Text)
+            formatDate = DateTime.Parse(label.Text + lblMonthName.Text)
             Dim dayViewForm As New DayView(formatDate)
             Call dayViewForm.Show()
         End If
@@ -118,7 +118,7 @@ Public Class MonthView
         'Take action if the picture box represents a valid day
         If (label.Text <> String.Empty) Then
             Dim formatDate As DateTime
-            formatDate = DateTime.Parse(getLabelNum(label.Tag) + lblMonthName.Text)
+            formatDate = DateTime.Parse(label.Text + lblMonthName.Text)
             Dim dayViewForm As New DayView(formatDate)
             Call dayViewForm.Show()
         End If
@@ -191,7 +191,6 @@ Public Class MonthView
             ctl = ctlList.Item("label" + counter.ToString())
             ctl.Text = ""
             ctl.Show()
-
             ctl = ctlList.Item("pbox" + counter.ToString())
             ctl.Show()
         Next
@@ -274,15 +273,21 @@ Public Class MonthView
                 connection.Close()
             End If
 
+            MessageBox.Show("Month information could not be retrieved, the following error occurred:" + Environment.NewLine + ex.Message, "Month Display Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+
 
         End Try
     End Sub
 
     Private Sub MonthView_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
+        btnAddEvent.BackColor = Color.WhiteSmoke
+        btnDay.BackColor = Color.WhiteSmoke
+        btnMonth.BackColor = Color.WhiteSmoke
+
         'Get the current date
         Dim currentDate As Date = DateTime.Now()
-
+        dtpDay.Value = currentDate
         'Make the layout for the calendar (create all the necessary objects)
         makeCalendar()
 

@@ -24,7 +24,6 @@ Partial Class MonthView
     Private Sub InitializeComponent()
         Me.cboxMonth = New System.Windows.Forms.ComboBox()
         Me.btnMonth = New System.Windows.Forms.Button()
-        Me.TextBox1 = New System.Windows.Forms.TextBox()
         Me.lblMonthName = New System.Windows.Forms.Label()
         Me.dtpDay = New System.Windows.Forms.DateTimePicker()
         Me.Label2 = New System.Windows.Forms.Label()
@@ -36,7 +35,7 @@ Partial Class MonthView
         '
         'cboxMonth
         '
-        Me.cboxMonth.BackColor = System.Drawing.Color.DarkSeaGreen
+        Me.cboxMonth.BackColor = System.Drawing.Color.White
         Me.cboxMonth.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cboxMonth.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.cboxMonth.FormattingEnabled = True
@@ -48,20 +47,12 @@ Partial Class MonthView
         '
         'btnMonth
         '
-        Me.btnMonth.BackgroundImage = Global.CalendarApplication.My.Resources.Resources.green_background
         Me.btnMonth.Location = New System.Drawing.Point(856, 32)
         Me.btnMonth.Name = "btnMonth"
         Me.btnMonth.Size = New System.Drawing.Size(75, 23)
         Me.btnMonth.TabIndex = 4
         Me.btnMonth.Text = "Display"
         Me.btnMonth.UseVisualStyleBackColor = True
-        '
-        'TextBox1
-        '
-        Me.TextBox1.Location = New System.Drawing.Point(872, 598)
-        Me.TextBox1.Name = "TextBox1"
-        Me.TextBox1.Size = New System.Drawing.Size(100, 20)
-        Me.TextBox1.TabIndex = 5
         '
         'lblMonthName
         '
@@ -94,7 +85,7 @@ Partial Class MonthView
         '
         'cboxYear
         '
-        Me.cboxYear.BackColor = System.Drawing.Color.DarkSeaGreen
+        Me.cboxYear.BackColor = System.Drawing.Color.White
         Me.cboxYear.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cboxYear.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.cboxYear.FormattingEnabled = True
@@ -115,7 +106,6 @@ Partial Class MonthView
         '
         'btnDay
         '
-        Me.btnDay.BackgroundImage = Global.CalendarApplication.My.Resources.Resources.green_background
         Me.btnDay.Location = New System.Drawing.Point(856, 68)
         Me.btnDay.Name = "btnDay"
         Me.btnDay.Size = New System.Drawing.Size(75, 23)
@@ -125,7 +115,6 @@ Partial Class MonthView
         '
         'btnAddEvent
         '
-        Me.btnAddEvent.BackgroundImage = Global.CalendarApplication.My.Resources.Resources.green_background
         Me.btnAddEvent.Location = New System.Drawing.Point(779, 97)
         Me.btnAddEvent.Name = "btnAddEvent"
         Me.btnAddEvent.Size = New System.Drawing.Size(152, 23)
@@ -146,7 +135,6 @@ Partial Class MonthView
         Me.Controls.Add(Me.Label2)
         Me.Controls.Add(Me.dtpDay)
         Me.Controls.Add(Me.lblMonthName)
-        Me.Controls.Add(Me.TextBox1)
         Me.Controls.Add(Me.btnMonth)
         Me.Controls.Add(Me.cboxMonth)
         Me.Name = "MonthView"
@@ -157,7 +145,6 @@ Partial Class MonthView
     End Sub
     Friend WithEvents cboxMonth As System.Windows.Forms.ComboBox
     Friend WithEvents btnMonth As System.Windows.Forms.Button
-    Friend WithEvents TextBox1 As System.Windows.Forms.TextBox
     Friend WithEvents lblMonthName As System.Windows.Forms.Label
     Friend WithEvents dtpDay As System.Windows.Forms.DateTimePicker
     Friend WithEvents Label2 As System.Windows.Forms.Label
