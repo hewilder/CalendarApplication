@@ -4,7 +4,7 @@ Imports MySql.Data.MySqlClient
 Public Class UpdateEvent
     Dim myId As Integer
 
-    Public Sub New(eventId As Integer)
+    Private Sub New(eventId As Integer)
         InitializeComponent()
 
         'Make sure there are no other instances of a form editting the same event
