@@ -226,7 +226,8 @@ Public Class MonthView
     End Sub
 
     Private Sub labelCalForMonth(monthIndex As Integer, year As Integer, monthName As String, useIndex As Integer)
-        Dim connectionString As String = "Server=orion.csl.mtu.edu; Database=hewample; Uid=hewample;Pwd=hewample"
+        'Dim connectionString As String = "Server=orion.csl.mtu.edu; Database=hewample; Uid=hewample;Pwd=hewample" 
+        Dim connectionString As String = "Server=localhost; Database=calendar; Uid=root; Pwd=teamsoftware"
         Dim connection As New MySqlConnection(connectionString)
         Dim da As New MySqlDataAdapter
         Dim dt As DataSet = New DataSet
