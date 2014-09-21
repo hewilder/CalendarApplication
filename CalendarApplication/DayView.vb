@@ -28,8 +28,8 @@ Public Class DayView
     '***Return values from this function should be checked for null references as I could not make an empty DataRowCollection****
 
     Public Function getEvents() As DataRowCollection
-        'Dim connectionString As String = "Server=orion.csl.mtu.edu; Database=hewample; Uid=hewample;Pwd=hewample" 
-        Dim connectionString As String = "Server=localhost; Database=calendar; Uid=root; Pwd=teamsoftware"
+        Dim connectionString As String = "Server=orion.csl.mtu.edu; Database=hewample; Uid=hewample;Pwd=hewample"
+        'Dim connectionString As String = "Server=localhost; Database=calendar; Uid=root; Pwd=teamsoftware"
         Dim connection As New MySqlConnection(connectionString)
         Dim da As New MySqlDataAdapter
         Dim dt As DataSet = New DataSet
@@ -102,8 +102,8 @@ Public Class DayView
     End Sub
 
     Public Function deleteEvent(eventId As String) As Integer
-        'Dim connectionString As String = "Server=orion.csl.mtu.edu; Database=hewample; Uid=hewample;Pwd=hewample" 
-        Dim connectionString As String = "Server=localhost; Database=calendar; Uid=root; Pwd=teamsoftware"
+        Dim connectionString As String = "Server=orion.csl.mtu.edu; Database=hewample; Uid=hewample;Pwd=hewample"
+        'Dim connectionString As String = "Server=localhost; Database=calendar; Uid=root; Pwd=teamsoftware"
         Dim connection As New MySqlConnection(connectionString)
         Dim da As New MySqlDataAdapter
         Dim dt As DataSet = New DataSet
