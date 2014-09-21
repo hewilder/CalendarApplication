@@ -139,6 +139,8 @@ Public Class UpdateEvent
         Dim closeForm As DayView = Nothing
         Dim loc1 As Point
         Dim loc2 As Point
+        Dim reload1 As Boolean = False
+        Dim reload2 As Boolean = False
 
         'Close form with new start date and open new one
         For Each frm In My.Application.OpenForms
@@ -146,6 +148,7 @@ Public Class UpdateEvent
                 dayViewForm = DirectCast(frm, DayView)
                 If (dayViewForm.myDate = startDate) Then
                     closeForm = dayViewForm
+                    reload1 = True
                 End If
             Catch ex As Exception
 
@@ -164,6 +167,7 @@ Public Class UpdateEvent
                 dayViewForm = DirectCast(frm, DayView)
                 If (dayViewForm.myDate = oldStartDate) Then
                     closeForm = dayViewForm
+                    reload2 = True
                 End If
             Catch ex As Exception
 
@@ -176,16 +180,23 @@ Public Class UpdateEvent
             closeForm.Close()
         End If
 
-        Dim dateArr As String() = startDate.Split("/")
-        Dim newDayViewForm As DayView = New DayView(New Date(dateArr(2), dateArr(0), dateArr(1)))
+        Dim dateArr() As String
+        Dim newDayViewForm As DayView
+        If (True) Then
+            dateArr = startDate.Split("/")
+            newDayViewForm = New DayView(New Date(dateArr(2), dateArr(0), dateArr(1)))
 
-        'Open day view form
-        Call newDayViewForm.Show()
-        newDayViewForm.Location = loc1
-
-        newDayViewForm = New DayView(oldStartDate)
-        Call newDayViewForm.Show()
-        newDayViewForm.Location = loc2
+            'Open day view form
+            Call newDayViewForm.Show()
+            newDayViewForm.Location = loc1
+        End If
+        
+        If (reload2) Then
+            newDayViewForm = New DayView(oldStartDate)
+            Call newDayViewForm.Show()
+            newDayViewForm.Location = loc2
+        End If
+        
 
 
         'Close update event form

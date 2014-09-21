@@ -20,7 +20,7 @@ Public Class MonthView
             weekDayLabels(counter).BorderStyle = BorderStyle.None
             weekDayLabels(counter).MinimumSize = New Size(121, 20)
             weekDayLabels(counter).TextAlign = ContentAlignment.BottomCenter
-            weekDayLabels(counter).Font = New Font("Microsoft Sans Serif", 12, FontStyle.Bold)
+            weekDayLabels(counter).Font = New Font("Microsoft Sans Serif", 10, FontStyle.Bold)
             weekDayLabels(counter).Location = New Point(leftOffset + 131 * (counter Mod 7), topOffset - 30 + 75 * (counter \ 7))
 
             'Choose correct text
@@ -280,6 +280,8 @@ Public Class MonthView
     End Sub
 
     Private Sub MonthView_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+
+        lblMonthName.Location = New Point(14, 65)
 
         btnAddEvent.BackColor = Color.WhiteSmoke
         btnDay.BackColor = Color.WhiteSmoke
