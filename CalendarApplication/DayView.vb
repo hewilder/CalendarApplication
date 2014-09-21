@@ -156,6 +156,7 @@ Public Class DayView
 
         Dim startLabels(numEvents) As Label
         Dim endLabels(numEvents) As Label
+        Dim endDateLabels(numEvents) As Label
         Dim titleLabels(numEvents) As Label
         Dim descTexts(numEvents) As TextBox
         Dim updateButtons(numEvents) As Button
@@ -172,8 +173,12 @@ Public Class DayView
             startLabels(counter).TextAlign = ContentAlignment.BottomCenter
             startLabels(counter).Font = New Font("Microsoft Sans Serif", 12, FontStyle.Bold)
             startLabels(counter).Location = New Point(leftOffset, (topOffset + (100 * counter)))
-            startLabels(counter).Text = events.Item(counter).Item("startTime").ToString()
+            startLabels(counter).Tag = events.Item(counter).Item("id").ToString()
+            Dim startTime As Date = DateTime.Parse(events.Item(counter).Item("startTime").ToString())
+            Dim startTimeArr() As String = startTime.ToString.Split(" ")
+            startLabels(counter).Text = (startTime.Hour Mod 12).ToString + ":" + startTime.Minute.ToString + " " + startTimeArr(2)
             Panel1.Controls.Add(startLabels(counter))
+            ctlList.Add("start" + startLabels(counter).Tag, startLabels(counter))
 
             endLabels(counter) = New Label
             endLabels(counter).BackColor = Color.White
@@ -183,8 +188,29 @@ Public Class DayView
             endLabels(counter).Font = New Font("Microsoft Sans Serif", 12, FontStyle.Bold)
             endLabels(counter).ForeColor = Color.DarkGray
             endLabels(counter).Location = New Point(leftOffset + 20, (topOffset + 25 + (100 * counter)))
-            endLabels(counter).Text = events.Item(counter).Item("endTime").ToString()
+            endLabels(counter).Tag = events.Item(counter).Item("id").ToString()
+            Dim endTime As Date = DateTime.Parse(events.Item(counter).Item("endTime").ToString())
+            Dim endTimeArr() As String = endTime.ToString.Split(" ")
+            endLabels(counter).Text = (endTime.Hour Mod 12).ToString + ":" + endTime.Minute.ToString + " " + endTimeArr(2)
             Panel1.Controls.Add(endLabels(counter))
+            ctlList.Add("end" + endLabels(counter).Tag, endLabels(counter))
+
+            endDateLabels(counter) = New Label
+            endDateLabels(counter).BackColor = Color.White
+            endDateLabels(counter).BorderStyle = BorderStyle.None
+            endDateLabels(counter).MinimumSize = New Size(68, 20)
+            endDateLabels(counter).TextAlign = ContentAlignment.TopCenter
+            endDateLabels(counter).Font = New Font("Microsoft Sans Serif", 9, FontStyle.Bold)
+            endDateLabels(counter).ForeColor = Color.DarkGray
+            endDateLabels(counter).Location = New Point(leftOffset + 20, (topOffset + 45 + (100 * counter)))
+            endDateLabels(counter).Tag = events.Item(counter).Item("id").ToString()
+            Dim endDate As Date = DateTime.Parse(events.Item(counter).Item("endDate").ToString())
+            Dim startDate As Date = DateTime.Parse(events.Item(counter).Item("startDate").ToString())
+            If (endDate <> startDate) Then
+                endDateLabels(counter).Text = "(" + endDate.Month.ToString + "/" + endDate.Day.ToString + "/" + endDate.Year.ToString + ")"
+            End If
+            Panel1.Controls.Add(endDateLabels(counter))
+            ctlList.Add("endDate" + endDateLabels(counter).Tag, endDateLabels(counter))
 
             titleLabels(counter) = New Label
             titleLabels(counter).BackColor = Color.White
@@ -193,13 +219,15 @@ Public Class DayView
             titleLabels(counter).TextAlign = ContentAlignment.BottomLeft
             titleLabels(counter).Font = New Font("Microsoft Sans Serif", 12, FontStyle.Bold)
             titleLabels(counter).Location = New Point(leftOffset + 130, (topOffset + (100 * counter)))
+            titleLabels(counter).Tag = events.Item(counter).Item("id").ToString()
             titleLabels(counter).Text = events.Item(counter).Item("title").ToString()
             Panel1.Controls.Add(titleLabels(counter))
+            ctlList.Add("title" + titleLabels(counter).Tag, titleLabels(counter))
 
             descTexts(counter) = New TextBox
             descTexts(counter).BackColor = Color.White
             descTexts(counter).BorderStyle = BorderStyle.None
-            descTexts(counter).MinimumSize = New Size(400, 20)
+            descTexts(counter).MinimumSize = New Size(400, 40)
             descTexts(counter).Font = New Font("Microsoft Sans Serif", 12, FontStyle.Bold)
             descTexts(counter).ForeColor = Color.DarkGray
             descTexts(counter).Location = New Point(leftOffset + 133, (topOffset + 27 + (100 * counter)))
@@ -207,7 +235,10 @@ Public Class DayView
             descTexts(counter).ScrollBars = ScrollBars.Vertical
             descTexts(counter).Multiline = True
             descTexts(counter).ReadOnly = True
+            descTexts(counter).Tag = events.Item(counter).Item("id").ToString()
+            AddHandler descTexts(counter).GotFocus, AddressOf Me.textboxFocus
             Panel1.Controls.Add(descTexts(counter))
+            ctlList.Add("desc" + descTexts(counter).Tag, descTexts(counter))
 
             updateButtons(counter) = New Button
             updateButtons(counter).BackColor = Color.White
@@ -219,6 +250,7 @@ Public Class DayView
             updateButtons(counter).Tag = events.Item(counter).Item("id").ToString()
             AddHandler updateButtons(counter).Click, AddressOf Me.update_click
             Panel1.Controls.Add(updateButtons(counter))
+            ctlList.Add("update" + updateButtons(counter).Tag, updateButtons(counter))
 
             deleteButtons(counter) = New Button
             deleteButtons(counter).BackColor = Color.White
@@ -230,6 +262,8 @@ Public Class DayView
             deleteButtons(counter).Text = "Delete"
             AddHandler deleteButtons(counter).Click, AddressOf Me.delete_click
             Panel1.Controls.Add(deleteButtons(counter))
+            ctlList.Add("delete" + deleteButtons(counter).Tag, deleteButtons(counter))
+
         Next
 
     End Sub
@@ -246,9 +280,19 @@ Public Class DayView
         Call newUpdateEvent.Show()
     End Sub
 
+    Private Sub textboxFocus(sender As Object, e As EventArgs)
+        btnAddEvent.Focus()
+    End Sub
+
     Private Sub delete_click(sender As Object, e As EventArgs)
         Dim delButton As Button
         delButton = DirectCast(sender, Button)
+        Dim id As String = delButton.Tag
+
+        Dim deleteConfirm As System.Windows.Forms.DialogResult = MessageBox.Show("Are you sure you would like to delete: " + Environment.NewLine + ctlList.Item("title" + id).Text, "Confirm event deletion", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2)
+        If (deleteConfirm = Windows.Forms.DialogResult.No) Then
+            Return
+        End If
 
         Dim result As Integer = deleteEvent(delButton.Tag.ToString())
         If (result = 0) Then
