@@ -3,6 +3,7 @@ Imports MySql.Data.MySqlClient
 
 Public Class UpdateEvent
     Dim myId As Integer
+    Dim oldStartDate As Date
 
     Public Sub New(eventId As Integer)
         InitializeComponent()
@@ -136,7 +137,10 @@ Public Class UpdateEvent
     Private Sub afterSuccessfulUpdate(startDate As String)
         Dim dayViewForm As DayView
         Dim closeForm As DayView = Nothing
-        Dim loc As Point
+        Dim loc1 As Point
+        Dim loc2 As Point
+
+        'Close form with new start date and open new one
         For Each frm In My.Application.OpenForms
             Try
                 dayViewForm = DirectCast(frm, DayView)
@@ -150,7 +154,25 @@ Public Class UpdateEvent
         Next
 
         If (Not IsNothing(closeForm)) Then
-            loc = New Point(closeForm.Location.X, closeForm.Location.Y)
+            loc1 = New Point(closeForm.Location.X, closeForm.Location.Y)
+            closeForm.Close()
+        End If
+
+        'Close form with old start date and open new one
+        For Each frm In My.Application.OpenForms
+            Try
+                dayViewForm = DirectCast(frm, DayView)
+                If (dayViewForm.myDate = oldStartDate) Then
+                    closeForm = dayViewForm
+                End If
+            Catch ex As Exception
+
+            End Try
+
+        Next
+
+        If (Not IsNothing(closeForm)) Then
+            loc2 = New Point(closeForm.Location.X, closeForm.Location.Y)
             closeForm.Close()
         End If
 
@@ -159,7 +181,12 @@ Public Class UpdateEvent
 
         'Open day view form
         Call newDayViewForm.Show()
-        newDayViewForm.Location = loc
+        newDayViewForm.Location = loc1
+
+        newDayViewForm = New DayView(oldStartDate)
+        Call newDayViewForm.Show()
+        newDayViewForm.Location = loc2
+
 
         'Close update event form
         Me.Close()
@@ -175,6 +202,8 @@ Public Class UpdateEvent
             dtpEndTime.Value = DateTime.Parse(row.Item("endTime").ToString())
             dtpStartDate.Value = DateTime.Parse(row.Item("startDate").ToString())
             dtpStartTime.Value = DateTime.Parse(row.Item("startTime").ToString())
+
+            oldStartDate = dtpStartDate.Value
         Catch ex As Exception
             Dim str As String = ex.Message
         End Try

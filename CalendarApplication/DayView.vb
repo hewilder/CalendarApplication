@@ -11,6 +11,21 @@ Public Class DayView
         myDate = dateValue
         lblDate.Text = myDate.ToString("MMMM d, yyyy")
         lblDayOfWeek.Text = myDate.DayOfWeek.ToString()
+
+        'Make sure there are no other instances of a form editting the same event
+        For Each frm In My.Application.OpenForms
+            Try
+                Dim dayViewForm As DayView = DirectCast(frm, DayView)
+                If (dayViewForm IsNot (Me) And dayViewForm.myDate = myDate) Then
+                    dayViewForm.Focus()
+                    Me.Close()
+                End If
+
+            Catch ex As Exception
+
+            End Try
+
+        Next
     End Sub
 
     'Returns a collection of data rows from the database
