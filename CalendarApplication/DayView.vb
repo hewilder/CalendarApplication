@@ -186,12 +186,21 @@ Public Class DayView
             startLabels(counter).BorderStyle = BorderStyle.None
             startLabels(counter).MinimumSize = New Size(68, 20)
             startLabels(counter).TextAlign = ContentAlignment.BottomCenter
-            startLabels(counter).Font = New Font("Microsoft Sans Serif", 12, FontStyle.Bold)
+            startLabels(counter).Font = New Font("Microsoft Sans Serif", 11, FontStyle.Bold)
             startLabels(counter).Location = New Point(leftOffset, (topOffset + (100 * counter)))
             startLabels(counter).Tag = events.Item(counter).Item("id").ToString()
             Dim startTime As Date = DateTime.Parse(events.Item(counter).Item("startTime").ToString())
             Dim startTimeArr() As String = startTime.ToString.Split(" ")
-            startLabels(counter).Text = (startTime.Hour Mod 12).ToString + ":" + startTime.Minute.ToString + " " + startTimeArr(2)
+            Dim startHourInt As Integer = startTime.Hour Mod 12
+            If (startHourInt = 0) Then
+                startHourInt = 12
+            End If
+
+            Dim startMin As String = startTime.Minute.ToString
+            If (startMin.Length = 1) Then
+                startMin = "0" + startMin
+            End If
+            startLabels(counter).Text = startHourInt.ToString + ":" + startMin + " " + startTimeArr(2)
             Panel1.Controls.Add(startLabels(counter))
             ctlList.Add("start" + startLabels(counter).Tag, startLabels(counter))
 
@@ -200,13 +209,22 @@ Public Class DayView
             endLabels(counter).BorderStyle = BorderStyle.None
             endLabels(counter).MinimumSize = New Size(68, 20)
             endLabels(counter).TextAlign = ContentAlignment.BottomCenter
-            endLabels(counter).Font = New Font("Microsoft Sans Serif", 12, FontStyle.Bold)
+            endLabels(counter).Font = New Font("Microsoft Sans Serif", 11, FontStyle.Bold)
             endLabels(counter).ForeColor = Color.DarkGray
             endLabels(counter).Location = New Point(leftOffset + 20, (topOffset + 25 + (100 * counter)))
             endLabels(counter).Tag = events.Item(counter).Item("id").ToString()
             Dim endTime As Date = DateTime.Parse(events.Item(counter).Item("endTime").ToString())
             Dim endTimeArr() As String = endTime.ToString.Split(" ")
-            endLabels(counter).Text = (endTime.Hour Mod 12).ToString + ":" + endTime.Minute.ToString + " " + endTimeArr(2)
+            Dim endHourInt As Integer = endTime.Hour Mod 12
+            If (endHourInt = 0) Then
+                endHourInt = 12
+            End If
+
+            Dim endMin As String = endTime.Minute.ToString
+            If (endMin.Length = 1) Then
+                endMin = "0" + endMin
+            End If
+            endLabels(counter).Text = endHourInt.ToString + ":" + endMin + " " + endTimeArr(2)
             Panel1.Controls.Add(endLabels(counter))
             ctlList.Add("end" + endLabels(counter).Tag, endLabels(counter))
 

@@ -57,10 +57,10 @@ Partial Class MonthView
         'lblMonthName
         '
         Me.lblMonthName.AutoSize = True
-        Me.lblMonthName.Font = New System.Drawing.Font("Microsoft Sans Serif", 27.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblMonthName.Font = New System.Drawing.Font("Microsoft Sans Serif", 27.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblMonthName.Location = New System.Drawing.Point(14, 65)
         Me.lblMonthName.Name = "lblMonthName"
-        Me.lblMonthName.Size = New System.Drawing.Size(159, 42)
+        Me.lblMonthName.Size = New System.Drawing.Size(152, 42)
         Me.lblMonthName.TabIndex = 6
         Me.lblMonthName.Text = "January"
         '

@@ -41,7 +41,7 @@ Partial Class DayView
         Me.lblDate.AutoSize = True
         Me.lblDate.Font = New System.Drawing.Font("Microsoft Sans Serif", 36.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblDate.ForeColor = System.Drawing.Color.Black
-        Me.lblDate.Location = New System.Drawing.Point(0, 69)
+        Me.lblDate.Location = New System.Drawing.Point(1, 68)
         Me.lblDate.Name = "lblDate"
         Me.lblDate.Size = New System.Drawing.Size(385, 55)
         Me.lblDate.TabIndex = 7
@@ -50,11 +50,11 @@ Partial Class DayView
         'lblDayOfWeek
         '
         Me.lblDayOfWeek.AutoSize = True
-        Me.lblDayOfWeek.Font = New System.Drawing.Font("Microsoft Sans Serif", 21.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblDayOfWeek.Font = New System.Drawing.Font("Microsoft Sans Serif", 27.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblDayOfWeek.ForeColor = System.Drawing.Color.DarkGray
-        Me.lblDayOfWeek.Location = New System.Drawing.Point(4, 36)
+        Me.lblDayOfWeek.Location = New System.Drawing.Point(4, 26)
         Me.lblDayOfWeek.Name = "lblDayOfWeek"
-        Me.lblDayOfWeek.Size = New System.Drawing.Size(134, 33)
+        Me.lblDayOfWeek.Size = New System.Drawing.Size(163, 42)
         Me.lblDayOfWeek.TabIndex = 8
         Me.lblDayOfWeek.Text = "Tuesday"
         '
